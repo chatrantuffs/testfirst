@@ -1,0 +1,20 @@
+.bar rect {
+  fill: steelblue;
+}
+
+.bar text {
+  fill: #fff;
+  font: 10px sans-serif;
+}
+
+.block-ui-main {
+    min-height: 400px;
+}
+
+.iframeclass {
+ margin: 0px;
+ padding: 0px;
+ width: 100%;
+ height: 543px;
+ border: 0px;
+}

@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+	<head>
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	    <script src="graph.controller.js"></script>
+	    <script src="../app-utilities/app-debug.js"></script>
+	   
+	  	<link rel="stylesheet" href="../app-css/graph_styles.css">
+	    <link rel="stylesheet" href="../app-css/graph_trac.css">
+	  	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	  
+	  <script>
+	        $('body').ready(function() {
+	            // preload iframe with message
+	            var iframe = document.getElementById('show');
+	            var iframedoc = iframe.contentDocument || iframe.contentWindow.document;
+	
+	            $('.showbases').click(function(evt){
+	                evt.preventDefault();
+	                evt.stopPropagation();
+	                $(evt.target).fadeOut();
+	                $('.chartlinks').stop().slideUp({complete: function() {
+	                    $('.showcharts').fadeIn();
+	                    $('.baselinks').slideDown();
+	                }});
+	            });
+	            
+	            $('.showcharts').click(function(evt){
+	                evt.preventDefault();
+	                evt.stopPropagation();
+	                $(evt.target).fadeOut();
+	                $('.baselinks').stop().slideUp({complete: function() {
+	                    $('.showbases').fadeIn();
+	                    $('.chartlinks').slideDown();
+	                }});
+	            });
+	            
+	            $('.test-hide').click(function(){
+	            	//$(this).parents('.dropdown-menu').hide();
+	            	$('.parent-hide').trigger('click');
+	            });
+	            
+	            $('.examplelinks a').each(function(i, elem) {
+	                $(elem).click(function(evt) {
+	                    $('#show').prop('src', $(evt.target).prop('href'));
+	                    evt.stopPropagation();
+	                    evt.preventDefault();
+	                    $('.examplelinks a').removeClass('selected');
+	                    $(evt.target).addClass('selected');
+	                    // add link to source
+	                    var urlparts = $(evt.target).prop('href').split('/');
+	                    var file = urlparts[urlparts.length - 1];
+	                    // also set link to view only the example
+	                    $('#showonlythis').prop('href', $(evt.target).prop('href'));
+	                    // done
+	                    $('#example_options').attr('style', '');
+	                    return false;
+	                });
+	            });
+	        });
+	    </script>
+	</head>
+
+	<body ng-app="app.graph" ng-controller="GraphController">
+	    <section>
+	        <div class="examplelinks chartlinks">
+	            <div class="btn-group">
+	      			<button type="button" class="btn btn-primary dropdown-toggle parent-hide" data-toggle="dropdown">
+	      				Select a Graph Option <span class="caret"></span></button>
+					    <ul class="dropdown-menu" role="menu">
+					    	<li ng-repeat="option in data.availableOptions track by option.id">
+					    		<a class="test-hide" href="{{option.pageUrl}}">{{option.description}}</a>
+					    	</li>
+					    </ul>
+	    		</div>
+	        </div>
+			<div id="show_wrapper"><iframe id="show"></iframe></div>
+	
+	    </section>
+	</body>
+</html>

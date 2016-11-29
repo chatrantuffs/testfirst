@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<meta charset="utf-8" />
+<title>POC-DashBoard</title>
+<link rel="import" href="common/common.html">
+<script>
+document.onkeydown = function(){
+  switch (event.keyCode){
+        case 116 : //F5 button
+            event.returnValue = false;
+            event.keyCode = 0;
+            return false;
+        case 82 : //R button
+            if (event.ctrlKey){ 
+                event.returnValue = false;
+                event.keyCode = 0;
+                return false;
+            }
+    }
+}
+</script>
+</head>
+<body ng-controller="appController">
+	<header>
+		<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+			<!-- navbar-fixed-top put the top header fixed and the scroll working in body itself -->
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="#example">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a href="#/login" class="navbar-brand">POC-DashBoard</a>
+				</div>
+
+				<div class="collapse navbar-collapse" id="example" >
+					<ul class="nav navbar-nav navbar-right">
+							<li ng-hide="loginStatus"><a href="#/register"><span class="glyphicon glyphicon-user"></span>
+									Sign Up</a></li>
+							<li ng-hide="loginStatus"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span>
+									Login</a></li>
+							<li ng-show="loginStatus"><a href="#/dashboard"><span class="glyphicon glyphicon-dashboard"></span>
+									Dashboard</a></li>
+							<li ng-show="loginStatus"><a href="" ng-click="logout($event)"><span class="glyphicon glyphicon-log-out"></span>
+									Logout</a></li>
+					</ul>
+					<form action="" class="navbar-form navbar-right" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Search Text">
+							<button class="btn btn-primary glyphicon glyphicon-search"
+								type="submit"></button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+
+
+	</header>
+	<div id="body">
+		<div class="jumbotron">
+			<div class="container">
+				<div>
+				<div>
+					<div
+						ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }"
+						ng-if="flash" ng-bind="flash.message">
+					</div>
+					<div ng-view></div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer> <p align="center">Copy Rights(c) : Glowtouch Tecnologies</p> </footer>
+
+</body>
+</html>

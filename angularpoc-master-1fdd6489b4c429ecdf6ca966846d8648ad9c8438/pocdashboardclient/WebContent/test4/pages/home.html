@@ -1,0 +1,13 @@
+
+<div class="container container-fluid thumbnails" style="padding-top: 30px; width: 100%">
+    <div class="row">
+        <ul style="list-style-type: none; padding: 0px 10px 0px 10px;">
+            <li class="col-xs-6 col-md-3" ng-repeat="key in utils.keys(params.charts) track by key">
+                <a href="#{{ params.charts[key].path }}" class="thumbnail">
+                    <img ng-src="img/{{ key }}.png" alt="">
+                    <div class="caption">{{ params.charts[key].title }}   {{ params.charts[key].path }}</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

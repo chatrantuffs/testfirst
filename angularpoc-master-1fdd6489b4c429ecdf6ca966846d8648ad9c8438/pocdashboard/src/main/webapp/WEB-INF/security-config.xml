@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jee
+		http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/util 
+		http://www.springframework.org/schema/util/spring-util.xsd">
+
+  
+	
+	<http auto-config="true" use-expressions="true">
+		<expression-handler ref="webexpressionHandler"/>
+		
+	</http>	
+	
+	<beans:bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler">
+	    <beans:property name="permissionEvaluator" ref="customPermissionEvaluator"/>
+    </beans:bean>
+    
+    <beans:bean id="customPermissionEvaluator" class="com.dashboard.poc.security.util.CustomPermissionEvaluator"/>
+	<beans:bean id="customUserDetailsService" class="com.dashboard.poc.security.util.CustomUserDetailsService"/>
+	
+	 <beans:bean id="org.springframework.security.authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+		<beans:property name="providers">
+			<util:list>
+				<beans:bean class="com.dashboard.poc.security.util.CustomAuthenticationProvider"/>
+			</util:list>
+		</beans:property>
+	</beans:bean>
+	
+	<authentication-manager>
+        <authentication-provider user-service-ref="customUserDetailsService" >
+        <password-encoder hash="sha" />
+        </authentication-provider>
+    </authentication-manager>
+    
+	<!-- <expression-handler ref="webexpressionHandler"/>
+		<form-login login-page="/login" authentication-failure-handler-ref="failureHandler"
+					authentication-failure-url="/loginfailed"  authentication-success-handler-ref="successHandler" />
+ 		<logout logout-success-url="/logout"   invalidate-session="true"  delete-cookies="JSESSIONID" />       
+        <session-management>
+               10 Session 
+            <concurrency-control max-sessions="10" error-if-maximum-exceeded="true" />
+        </session-management>
+	</http>
+	
+	 <beans:bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler">
+	    <beans:property name="permissionEvaluator" ref="permissionEvaluator"/>
+    </beans:bean>
+    
+    <beans:bean id="permissionEvaluator" class="com.prelude.paypilot.springsecurity.PaypilotPermissionEvaluator"/>
+    
+	<beans:bean id="customUserDetailsService" class="com.prelude.paypilot.springsecurity.CustomUserDetailsService"/>
+	<authentication-manager>
+        <authentication-provider user-service-ref="customUserDetailsService" >
+        <password-encoder hash="sha" />
+        </authentication-provider>
+    </authentication-manager>
+    
+    <beans:bean id="org.springframework.security.authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+		<beans:property name="providers">
+			<util:list>
+				<beans:bean class="com.prelude.paypilot.springsecurity.CustomAuthenticationProvider"/>
+			</util:list>
+		</beans:property>
+	</beans:bean>
+    
+    <beans:bean id="successHandler" class="com.prelude.paypilot.controller.CustomSuccessHandlerController"/>
+	<beans:bean id="failureHandler" class="com.prelude.paypilot.springsecurity.LoginFailureEventListener"/>	
+	
+	
+	<beans:bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
+ 	<beans:bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+	<beans:property name="messageConverters">
+  		<beans:list>
+    		<beans:ref bean="jacksonMessageConverter"/>
+  		</beans:list>
+	</beans:property>
+	
+</beans:bean>    -->
+
+</beans:beans>

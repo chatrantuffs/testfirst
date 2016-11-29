@@ -1,0 +1,63 @@
+<div class="well">
+<div id="mode">
+        <label><input type="checkbox" ng-model="params.visible"> Visible</label>&nbsp;
+        <label><input type="checkbox" ng-model="params.disabled"> Disabled</label>&nbsp;
+        <!--<label><input type="checkbox" ng-model="params.autorefresh"> Autorefresh</label>&nbsp;-->
+        <button ng-click="api.refresh()" style="line-height: 15px; padding: 0px 3px 0px 3px;">refresh</button>&emsp;&emsp;
+        <label><input type="radio" ng-model="params.mode" value="basic" ng-change="utils.reload()"> Basic</label>&nbsp;
+        <label><input type="radio" ng-model="params.mode" value="extended" ng-change="utils.reload()"> Extended</label>
+</div>
+<hr>
+<div id="mode">
+		  <button type="button" class="btn btn-default">Total Tickets <span class="badge">7</span></button>
+		  <button type="button" class="btn btn-info">Resolved <span class="badge">5</span></button>
+		  <button type="button" class="btn btn-danger">Critical <span class="badge">2</span></button>
+</div>
+</div> 
+
+<div id="gridSystemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridModalLabel">{{modaltitle}}</h4>
+      </div>
+      <div class="modal-body col-md-12">
+        <div>
+			            <div id="chart" class="with-3d-shadow with-transitions" ng-class="{disabled: params.disabled}">
+			                <nvd3 data="data" options="options" events="events" api="api" config="{extended: params.mode === 'extended', visible: params.visible, disabled: params.disabled }"></nvd3>
+			            </div>
+			    	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="bd-example bd-example-padded-bottom">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gridSystemModal">
+    Launch demo modal
+  </button>
+</div> -->
+
+
+<div class="container container-fluid thumbnails" style="padding-top: 30px; width: 100%">
+    <div class="row">
+        <ul style="list-style-type: none; padding: 0px 10px 0px 10px;">
+            <li class="col-xs-2 col-md-6" ng-repeat="key in utils.keys(params.charts) track by key">
+                <a class="thumbnail" ng-click="showDashBoard(params.charts[key].path, params.charts[key].title)" data-toggle="modal" data-target="#gridSystemModal">
+                    <img ng-src="images/{{ key }}.png" alt="">
+                    <div class="caption">{{ params.charts[key].title }}</div>
+                </a>
+               <!--  <div class="bd-example bd-example-padded-bottom">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gridSystemModal">
+    Launch demo modal
+  </button>
+</div> -->
+            </li>
+        </ul>
+    </div>
+</div>
+
+
